@@ -58,7 +58,11 @@ import {TrendingUp } from 'lucide-react'
           </div>
         </div>
 
-     
+     <div className="flex justify-center text-center">
+      <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+        <Link to="/MainApp">Get Started</Link>
+      </button>
+     </div>
      </main>
 </> 
 )
