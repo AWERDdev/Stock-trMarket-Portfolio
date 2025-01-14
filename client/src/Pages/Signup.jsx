@@ -1,8 +1,14 @@
-
+import NavBarNoAUTH from '../components/NavBarNoAUTH';
 function signupPage(){
     return(
         <>
-        <h1>hello I am singup Form</h1>
+        <main className='h-screen w-screen text-[#ffffff] dark:bg-gray-900'>
+        <header>
+            <NavBarNoAUTH/>
+        </header>
+        
+        
+        </main>
         </>
     )
 }

@@ -1,8 +1,14 @@
-
+import NavBarNoAUTH from '../components/NavBarNoAUTH';
 function loginPage(){
     return(
         <>
-        <h1>hello I am login page</h1>
+      <main className='h-screen w-screen text-[#ffffff] dark:bg-gray-900'>
+        <header>
+            <NavBarNoAUTH/>
+        </header>
+        
+        
+        </main>
         </>
     )
 }
