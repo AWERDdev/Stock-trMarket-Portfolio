@@ -6,6 +6,7 @@ const port  = process.env.PORT || 3500;
 const jwt = require("jsonwebtoken");
 const mongoose = require("mongoose");
 
+
 //** cors */
 app.use(cors({
     origin: ['https://bin2dec-frontend.vercel.app', 'http://localhost:5173', 'https://bin2dec-backend.vercel.app'],
@@ -31,7 +32,16 @@ app.use(express.urlencoded({extended:true}));
 app.get("/",(req,res)=>{
     res.json({message:"welcome to the stock market API 👍👍"});
 })
-
+app.post("/signup",(req,res)=>{
+    const userData = req.body;
+    console.log(userData);
+    
+})
+app.post("/login",(req,res)=>{
+    const userData = req.body;
+    console.log(userData);
+    
+})
 
 app.listen(port,()=>{
     console.log(`server is running on http://localhost:${port}`)

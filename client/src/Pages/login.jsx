@@ -34,10 +34,34 @@ function LoginPage(){
     
         return true;
     }
+    const SendData = async ()=>{
+        try{
+            const response = await fetch(`http://localhost:3500/signup`,{
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    Email,
+                    Password
+                }),
+            });
+            if(response.ok){
+                console.log("Data sent successfully");
+            }else{
+                console.log("Failed to send data");
+            }
+            
+        }catch(error){
+            console.log(`Failed to send data: ${error}`);
+        }
+    
+    }
     
     const functionHandling = () => {
         const isValid = InputHandling();
         if (isValid) {
+            SendData();
             navigate('/MainApp');
         }
     }
