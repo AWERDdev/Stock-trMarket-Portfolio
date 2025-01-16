@@ -12,9 +12,8 @@ function SignupPage() {
     const [nameError, setNameError] = useState('');
     const [EmailError, setEmailError] = useState('');
     const [PasswordError, setPasswordError] = useState('');
-
-    
-const InputHandling =()=>{
+       
+const InputHandling = async ()=>{
     const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     setUsernameError('');
     setNameError('');
@@ -52,9 +51,11 @@ const InputHandling =()=>{
         setPasswordError("Password must be at least 3 characters ");
         return false;
     }
+    const isValid = await SendData();
+    return isValid;
 
-    // If all validations pass, return true
-    return true;
+
+  
 }
 const SendData = async ()=>{
     try{
@@ -70,20 +71,26 @@ const SendData = async ()=>{
                 Password
             }),
         });
-        if(response.ok){
+        const data = await response.json();
+
+        if (response.ok) {
             console.log("Data sent successfully");
-        }else{
+            return true;
+        } else if (response.status === 409) {
+            console.log("Email already exists");
+            setEmailError(data.message);
+            return false;
+        } else {
             console.log("Failed to send data");
         }
-        
     }catch(error){
         console.log(`Failed to send data: ${error}`);
     }
 
 }
 
-const functionHandling = () => {
-    const isValid = InputHandling();
+const functionHandling = async() => {
+    const isValid = await InputHandling();
     if (isValid) {
         SendData()
         navigate('/MainApp');

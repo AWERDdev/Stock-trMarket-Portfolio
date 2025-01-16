@@ -8,9 +8,9 @@ function LoginPage(){
     const [Password,setpassword] = useState('');
     const [EmailError, setEmailError] = useState('');
     const [PasswordError, setPasswordError] = useState('');
-
-
-    const InputHandling = () => {
+    const [InvalidCredentialsError, setInvalidCredentialsError] = useState('');
+    
+    const InputHandling = async () => {
         const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
         setEmailError('');
         setPasswordError('');
@@ -31,12 +31,12 @@ function LoginPage(){
             setPasswordError("Password must be at least 3 characters ");
             return false;
         }
-    
-        return true;
+        const isValid = await SendData();
+        return isValid;
     }
     const SendData = async ()=>{
         try{
-            const response = await fetch(`http://localhost:3500/signup`,{
+            const response = await fetch(`http://localhost:3500/login`,{
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -46,20 +46,24 @@ function LoginPage(){
                     Password
                 }),
             });
-            if(response.ok){
-                console.log("Data sent successfully");
-            }else{
-                console.log("Failed to send data");
-            }
-            
+            const data = await response.json();
+
+        if (response.ok) {
+            console.log("Data sent successfully");
+            return true;
+        } else{ 
+            console.log("Invalid credentials");
+            setInvalidCredentialsError(data.message);
+            return false;
+        } 
         }catch(error){
             console.log(`Failed to send data: ${error}`);
         }
     
     }
     
-    const functionHandling = () => {
-        const isValid = InputHandling();
+    const functionHandling = async () => {
+        const isValid = await InputHandling();
         if (isValid) {
             SendData();
             navigate('/MainApp');
@@ -73,6 +77,9 @@ function LoginPage(){
                 <NavBarNoAUTH />
             </header>
             <div className="grid justify-center grid-cols-1 sm:grid-cols-2 gap-4 max-w-2xl mx-auto px-4 mt-8">
+                <div className='flex justify-center text-center'>
+                    <label className='text-[#ef4444] h-4'>{InvalidCredentialsError}</label>
+                </div>
                 <div className="grid gap-1">
                 <label htmlFor="Email" className="form-label">Email</label>
                     <input 

@@ -6,6 +6,8 @@ const axios = require("axios")
 const port  = process.env.PORT || 3500;
 const jwt = require("jsonwebtoken");
 const mongoose = require("mongoose");
+const bcrypt = require('bcrypt');
+
 //* values
 let Authintacated = false
 const JWT_SECRET = process.env.JWT_SECRET || 'your-secret-key';
@@ -52,67 +54,100 @@ app.get("/",(req,res)=>{
 })
 //* signup
 app.post("/signup", async(req,res)=>{
-    try{
-        const userData = await req.body
-        const {Username,name,Email, Password} = await req.body
-        if(!userData){
-            Authintacated = false
-            console.log("user isn't Authanticated")
-            res.json({AUTH:Authintacated})   
-        }else{
-            const token = jwt.sign(Email,"KEY")
-            const HasashPassword = await bcrypt.hash(Password,10)
-            console.log(HasashPassword)
-            const newUser = new User ({
-                token,
-                Username,
-                name,
-                Email,
-                Password:HasashPassword
-            })
-            await newUser.save();
-            Authintacated = true
-            console.log("is Authanticated")
-            res.json({AUTH:Authintacated})  
+    try {
+        console.log("Starting signup process")
+        const {Username,name,Email, Password} = req.body
+        console.log("Got user data:", {Username,name,Email})
+
+        let existingUser = null
+
+        try {
+            existingUser = await User.findOne({ email: Email }).exec()
+        } catch(dbError) {
+            console.log("Database query error:", dbError)
         }
-    }catch(Error){
+
+        if (existingUser) {
+            console.log("Email already exists")
+            Authintacated = false
+            return res.status(409).json({
+                message: "This email is already registered",
+                AUTH: Authintacated
+            })
+        }
+
+        const token = jwt.sign(Email,JWT_SECRET)
+        const HasashPassword = await bcrypt.hash(Password,10)
+
+        const newUser = new User({
+            username: Username,
+            name: name,
+            email: Email,
+            Password: HasashPassword,
+            token: token
+        })
+        console.log("About to save user")
+        
+        await newUser.save()
+        console.log("User saved successfully")
+
+        Authintacated = true
+        console.log("Authentication set to true")
+        res.json({AUTH:Authintacated}) 
+    } catch(error) {
+        console.log("Error details:", error)
         Authintacated = false
         res.status(400).send("failed to signup please try agian")
-        console.Error('failed to recive data ')
     }
-    
 })
+
 //* login
 app.post("/login", async(req,res)=>{
-    try{
+    try {
         const {Email,Password} = await req.body
         const user = await User.findOne({email:Email})
-        const isValidPassword = await bcrypt.compare(Password, user.Password);
+        const isValidPassword = await bcrypt.compare(Password, user.Password)
         
-        //* valad user
         if (user && isValidPassword) {
             Authintacated = true
-            res.json({ token: user.token, message: "Login successful",AUTH:Authintacated});
-        }
-         else {
+            res.json({ 
+                token: user.token, 
+                message: "Login successful",
+                AUTH: Authintacated
+            });
+        } else {
             Authintacated = false
-            res.status(401).json({ message: "Invalid credentials",AUTH:Authintacated });
+            res.status(401).json({ 
+                message: "Invalid credentials please enter password and email correctly",
+                AUTH: Authintacated 
+            });
         }
-    }catch(error){
+    } catch(error) {
         Authintacated = false
-        res.status(400).send(`failed to login ${error}`)
+        res.status(400).json({ 
+            message: "Invalid credentials please enter password and email correctly",
+            error: error.message,
+            AUTH: Authintacated
+        });
     }
 })
 
 //* logout
 app.get("/logout",(req,res)=>{
     Authintacated = false
+    console.log(`user is logout ${Authintacated}`)
     res.json({AUTH:Authintacated})
 })
 //* isAuth
 app.get("/isAUTH",(req,res)=>{
+    console.log(`${Authintacated}`)
     res.json({AUTH:Authintacated})
 })
+app.get("/users", async (req, res) => {
+    const users = await User.find({});
+    console.log(users)
+    res.json(users);
+});
 
 
 app.listen(port,()=>{
