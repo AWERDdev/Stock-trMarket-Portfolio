@@ -1,4 +1,4 @@
-import NavBarNoAUTH from '../components/NavBarNoAUTH'
+import NavBarNoAUTH from '../components/NavBarNoAUTH2.jsx'
 import { useNavigate } from 'react-router-dom'; // Update this import
 import { useState } from 'react';
 
@@ -72,8 +72,12 @@ const SendData = async ()=>{
             }),
         });
         const data = await response.json();
-
+        if (data.token) {
+            console.log("token stored in local storage");
+            localStorage.setItem('token', data.token);
+        }
         if (response.ok) {
+
             console.log("Data sent successfully");
             return true;
         } else if (response.status === 409) {

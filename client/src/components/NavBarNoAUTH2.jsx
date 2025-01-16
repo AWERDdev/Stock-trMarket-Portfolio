@@ -1,10 +1,7 @@
 import {Link} from "react-router-dom";
 import {TrendingUp } from 'lucide-react'
-import PropTypes from 'prop-types';
-NavBarNoAUTH.propTypes = {
-  handleLogout: PropTypes.func.isRequired
-};
-function NavBarNoAUTH({handleLogout}) {
+
+function NavBarNoAUTH() {
   return (
     
     <>
@@ -15,7 +12,7 @@ function NavBarNoAUTH({handleLogout}) {
        </div>
     <div className="flex gap-5 mr-10 text-[#ffffff]">
             <Link to="https://github.com/AWERDdev/">GitHubRepo</Link>
-            <div><button className="bg-black rounded p-2"onClick={handleLogout}>Logout</button></div>
+        
      </div>
      
      </header>

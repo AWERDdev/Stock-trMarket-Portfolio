@@ -1,4 +1,4 @@
-import NavBarNoAUTH from '../components/NavBarNoAUTH';
+import NavBarNoAUTH from '../components/NavBarNoAUTH2.jsx';
 import { useNavigate } from 'react-router-dom'; // Update this import
 import { useState } from 'react';
 function LoginPage(){
@@ -47,7 +47,10 @@ function LoginPage(){
                 }),
             });
             const data = await response.json();
-
+    if (data.token) {
+        console.log("token stored in local storage");
+        localStorage.setItem('token', data.token);
+    }
         if (response.ok) {
             console.log("Data sent successfully");
             return true;
@@ -76,10 +79,11 @@ function LoginPage(){
             <header>
                 <NavBarNoAUTH />
             </header>
-            <div className="grid justify-center grid-cols-1 sm:grid-cols-2 gap-4 max-w-2xl mx-auto px-4 mt-8">
-                <div className='flex justify-center text-center'>
+            <div className='flex justify-center text-center'>
                     <label className='text-[#ef4444] h-4'>{InvalidCredentialsError}</label>
                 </div>
+            <div className="grid justify-center grid-cols-1 sm:grid-cols-2 gap-4 max-w-2xl mx-auto px-4 mt-8">
+                
                 <div className="grid gap-1">
                 <label htmlFor="Email" className="form-label">Email</label>
                     <input 

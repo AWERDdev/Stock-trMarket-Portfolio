@@ -11,23 +11,21 @@ const bcrypt = require('bcrypt');
 //* values
 let Authintacated = false
 const JWT_SECRET = process.env.JWT_SECRET || 'your-secret-key';
-
-//** cors */
+//* CORS
 app.use(cors({
     origin: ['https://stockMarket-frontend.vercel.app', 'http://localhost:5173', 'https://stockMarket-backend.vercel.app'],
     methods: ['GET', 'POST', 'OPTIONS'],
-    allowedHeaders: ['Content-Type'],
+    allowedHeaders: ['Content-Type', 'Authorization'],
     credentials: true,
     maxAge: 86400
 }));
 
 app.use((req, res, next) => {
-    res.header('Access-Control-Allow-Origin', '*'); // Allow all origins for testing
+    res.header('Access-Control-Allow-Origin', '*');
     res.header('Access-Control-Allow-Methods', 'GET, POST, OPTIONS');
-    res.header('Access-Control-Allow-Headers', 'Content-Type');
+    res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization');
     next();
 });
-
 
 //* middleware
 app.use(express.json());
@@ -59,23 +57,15 @@ app.post("/signup", async(req,res)=>{
         const {Username,name,Email, Password} = req.body
         console.log("Got user data:", {Username,name,Email})
 
-        let existingUser = null
-
-        try {
-            existingUser = await User.findOne({ email: Email }).exec()
-        } catch(dbError) {
-            console.log("Database query error:", dbError)
-        }
+        const existingUser = await User.findOne({ email: Email });
 
         if (existingUser) {
-            console.log("Email already exists")
-            Authintacated = false
             return res.status(409).json({
                 message: "This email is already registered",
-                AUTH: Authintacated
-            })
+                AUTH: false
+            });
         }
-
+        console.log("Checking if user exists")
         const token = jwt.sign(Email,JWT_SECRET)
         const HasashPassword = await bcrypt.hash(Password,10)
 
@@ -93,7 +83,7 @@ app.post("/signup", async(req,res)=>{
 
         Authintacated = true
         console.log("Authentication set to true")
-        res.json({AUTH:Authintacated}) 
+        res.json({token:newUser.token,AUTH:Authintacated}) 
     } catch(error) {
         console.log("Error details:", error)
         Authintacated = false
@@ -132,21 +122,35 @@ app.post("/login", async(req,res)=>{
     }
 })
 
-//* logout
-app.get("/logout",(req,res)=>{
-    Authintacated = false
-    console.log(`user is logout ${Authintacated}`)
-    res.json({AUTH:Authintacated})
-})
 //* isAuth
-app.get("/isAUTH",(req,res)=>{
-    console.log(`${Authintacated}`)
-    res.json({AUTH:Authintacated})
-})
-app.get("/users", async (req, res) => {
-    const users = await User.find({});
-    console.log(users)
-    res.json(users);
+app.get("/isAUTH", async (req, res) => {
+    const token = req.headers.authorization?.split(' ')[1];
+    console.log('Received token:', token);
+
+    if (!token) {
+        console.log("No token provided");
+        return res.json({ AUTH: false });
+    }
+
+    try {
+        const decoded = jwt.verify(token, JWT_SECRET);
+        // Use decoded directly since it contains the email string
+        const user = await User.findOne({ email: decoded });
+        
+        console.log('Decoded token:', decoded);
+        console.log('User search result:', user);
+
+        if (user) {
+            console.log('User found:', user);
+            res.json({ AUTH: true });
+        } else {
+            console.log('User not found');
+            res.json({ AUTH: false });
+        }
+    } catch (error) {
+        console.log('Error:', error);
+        res.json({ AUTH: false });
+    }
 });
 
 
