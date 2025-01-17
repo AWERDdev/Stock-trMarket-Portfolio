@@ -15,7 +15,7 @@ function NavBarNoAUTH({handleLogout}) {
        </div>
     <div className="flex gap-5 mr-10 text-[#ffffff]">
             <Link to="https://github.com/AWERDdev/">GitHubRepo</Link>
-            <div><button className="bg-black rounded p-2"onClick={handleLogout}>Logout</button></div>
+            <div className="BTN-container"><button className="bg-black rounded p-2 w-[5rem] text-[1rem]"onClick={handleLogout}>Logout</button></div>
      </div>
      
      </header>
