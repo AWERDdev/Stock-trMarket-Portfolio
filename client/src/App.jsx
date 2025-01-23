@@ -2,6 +2,7 @@ import './App.css'
 import NavBar from "./components/NavBar"
 import NavBarNoAUTH from './components/NavBarNoAUTH'
 import { useState, useEffect } from 'react'
+import {Search} from 'lucide-react'
 
 function App() {
     const [isAUTH, setisAUTH] = useState(false);
@@ -41,7 +42,7 @@ function App() {
                 {/* Body content */}
             <div className="Body-container grid mt-5">
 
-            <div className='MarketOverview grid bg-black gap-4 rounded outline outline-1 outline-gray-500 justify-self-center w-[70vw] h-[20vh] p-4 ml-10 h-auto'>
+            <div className='MarketOverview grid bg-gray-950 gap-4 rounded outline outline-1 outline-gray-500 justify-self-center w-[70vw] h-[auto] p-4 ml-10 '>
                 <div className="header">
                     <div className="text text-[1.5rem] font-bold h-auto">Market Overview</div>
                 </div>
@@ -54,7 +55,9 @@ function App() {
                     </div>
                 
             </div>
-            <div className="SearchContainer"></div>
+            <div className="SearchContainer">
+            <Search/>
+            </div>
             <div className="StocksContainer"></div>
             <div className="WachtList-Container"></div>
             </div>
