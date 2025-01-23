@@ -55,7 +55,8 @@ function App() {
                     </div>
                 
             </div>
-            <div className="SearchContainer">
+            <div className="SearchContainer mt-[5rem]">
+                <input type="text" className="Search-Bar" />
             <Search/>
             </div>
             <div className="StocksContainer"></div>
