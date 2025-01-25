@@ -1,9 +1,72 @@
 [
     {
-    "symbol": "Apple",
-    "name":"AAPL",
-    "price":"$187.64",
-    "change":"+1.24%",
-    "volume":"64,2M"
+        "symbol": "AAPL",
+        "name": "Apple Inc.",
+        "price": "$187.64",
+        "change": "+1.24%",
+        "volume": "64.2M"
+    },
+    {
+        "symbol": "MSFT",
+        "name": "Microsoft",
+        "price": "$374.58",
+        "change": "+0.89%",
+        "volume": "23.1M"
+    },
+    {
+        "symbol": "GOOGL",
+        "name": "Alphabet Inc.",
+        "price": "$132.67",
+        "change": "+0.95%",
+        "volume": "28.4M"
+    },
+    {
+        "symbol": "AMZN",
+        "name": "Amazon.com",
+        "price": "$145.24",
+        "change": "+1.12%",
+        "volume": "42.6M"
+    },
+    {
+        "symbol": "NVDA",
+        "name": "NVIDIA Corp.",
+        "price": "$481.11",
+        "change": "+2.31%",
+        "volume": "38.9M"
+    },
+    {
+        "symbol": "META",
+        "name": "Meta Platforms",
+        "price": "$334.92",
+        "change": "+1.67%",
+        "volume": "19.8M"
+    },
+    {
+        "symbol": "TSLA",
+        "name": "Tesla Inc.",
+        "price": "$238.45",
+        "change": "-0.84%",
+        "volume": "125.3M"
+    },
+    {
+        "symbol": "JPM",
+        "name": "JPMorgan Chase",
+        "price": "$167.42",
+        "change": "+0.45%",
+        "volume": "8.9M"
+    },
+    {
+        "symbol": "V",
+        "name": "Visa Inc.",
+        "price": "$258.03",
+        "change": "+0.78%",
+        "volume": "5.4M"
+    },
+    {
+        "symbol": "WMT",
+        "name": "Walmart Inc.",
+        "price": "$156.71",
+        "change": "+0.32%",
+        "volume": "4.7M"
     }
 ]
