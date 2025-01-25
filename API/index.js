@@ -7,6 +7,8 @@ const port  = process.env.PORT || 3500;
 const jwt = require("jsonwebtoken");
 const mongoose = require("mongoose");
 const bcrypt = require('bcrypt');
+const fs = require('fs');
+const path = require('path');
 
 //* values
 let Authintacated = false
@@ -150,6 +152,16 @@ app.get("/isAUTH", async (req, res) => {
     } catch (error) {
         console.log('Error:', error);
         res.json({ AUTH: false });
+    }
+});
+app.get("/Stock", async (req, res) => {
+    try {
+        const data = fs.readFileSync("Stocks.json", "utf-8");
+        const stocks = JSON.parse(data);
+        res.json(stocks);
+    } catch (error) {
+        console.log(error);
+        res.status(500).json({ error: `Failed to fetch stocks ${error}` });
     }
 });
 

@@ -33,7 +33,6 @@ function App() {
     useEffect(() => {
         HandleNavBar();
     }, []);
-
     return (
         <main className="h-screen w-screen text-[#ffffff] dark:bg-gray-900">
             {isAUTH ? <NavBarNoAUTH handleLogout={handleLogout} /> : <NavBar />}
@@ -67,7 +66,7 @@ function App() {
                     </div>
                 </div>
 
-                <div className="StocksContainer gird justify-self-center bg-[hsl(0,0%,3%)] rounded-md w-[90vw] h-full outline outline-1 outline-gray-600">
+                <div className="StocksContainer gird justify-self-center bg-[hsl(0,0%,3%)] rounded-md w-[90vw] h-full outline outline-1 outline-gray-600  max-w-7xl mx-auto shadow-lg">
                     <div className="text ml-[2rem]">
                         <h1 className='text-[1.5rem] font-bold'>Stock Data</h1>
                     </div>
@@ -76,13 +75,14 @@ function App() {
                             <INFOBar/>
                         </div>
                         <div className="Stock-Container "> 
+
                             <Stock/>
                         </div>
                        
                     </div>
                 </div>
 
-                <div className="WachtList-Container gird gap-[20rem] justify-self-center bg-[hsl(0,0%,3%)] rounded-md w-[90vw] h-full outline outline-1 outline-gray-600">
+                <div className="WachtList-Container gird gap-[20rem] justify-self-center bg-[hsl(0,0%,3%)] rounded-md w-[90vw] h-full outline outline-1 outline-gray-600 max-w-7xl mx-auto  shadow-lg">
                     <div className="text ml-[2rem]">
                         <h1 className='text-[1.5rem] font-bold'>Your Watchlist</h1>
                     </div>
