@@ -12,6 +12,12 @@ function Stock({ stockData }) {
         }).isRequired
     }
 
+    const isPositiveChange = parseFloat(stockData.change) >= 0
+    const trendingIcon = isPositiveChange ? 
+        <TrendingUp className="w-4 h-4 mr-1"/> : 
+        <TrendingDown className="w-4 h-4 mr-1"/>
+    const changeColorClass = isPositiveChange ? 'text-green-500' : 'text-red-500'
+
     return (
         <div className="StockItem p-4 hover:bg-[hsl(0,0%,9%)] transition-colors">
             <div className="flex items-center justify-between max-w-7xl mx-auto">
@@ -24,12 +30,8 @@ function Stock({ stockData }) {
                 {/* Price Info Section */}
                 <div className="flex items-center justify-center space-x-8 w-1/3">
                     <div className="price">{stockData.price}</div>
-                    <div className={`change flex items-center ${stockData.change > 0 ? 'text-green-500' : 'text-red-500'}`}>
-                        {stockData.change > 0 ? (
-                            <TrendingUp className="w-4 h-4 mr-1"/>
-                        ) : (
-                            <TrendingDown className="w-4 h-4 mr-1"/>
-                        )}
+                    <div className={`change flex items-center ${changeColorClass}`}>
+                        {trendingIcon}
                         {stockData.change}
                     </div>
                     <div className="flex items-center text-gray-400">
