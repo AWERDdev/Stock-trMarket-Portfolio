@@ -159,6 +159,8 @@ app.get("/Stock", async (req, res) => {
         const data = fs.readFileSync("Stocks.json", "utf-8");
         const stocks = JSON.parse(data);
         res.json(stocks);
+        const searchTerm = req.query.search;
+        console.log(searchTerm);
     } catch (error) {
         console.log(error);
         res.status(500).json({ error: `Failed to fetch stocks ${error}` });

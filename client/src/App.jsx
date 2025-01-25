@@ -9,36 +9,36 @@ import Stock from './components/Stock'
 function App() {
     const [isAUTH, setisAUTH] = useState(false);
     const [StockData,setStockData] = useState([])
-
+ 
     const handleLogout = async () => {
         localStorage.removeItem('token');
-        console.log("Token removed from localStorage");
-        console.log("User logged out");
+        // console.log("Token removed from localStorage");
+        // console.log("User logged out");
         setisAUTH(false);
         window.location.href = '/';
     };
 
     const HandleNavBar = async () => {
-        console.log("Current token:", localStorage.getItem('token'));
+        // console.log("Current token:", localStorage.getItem('token'));
         const response = await fetch('http://localhost:3500/isAUTH', {
             headers: {
                 'Authorization': `Bearer ${localStorage.getItem('token')}`
             }
         });
-        const data = await response.json();
-        console.log("Auth Response:", data);
-        console.log("Auth Status:", data.AUTH);
+         const data = await response.json();
+        // console.log("Auth Response:", data);
+        // console.log("Auth Status:", data.AUTH);
         setisAUTH(data.AUTH);
     }
 
     const ReciveStock = async ()=>{
         const response = await fetch('http://localhost:3500/Stock');
         const Stockdata = await response.json();
-        console.log(Stockdata);
+        // console.log(Stockdata);
         setStockData(Stockdata);
     
     }
-
+   
 
     useEffect(() => {
         HandleNavBar();
@@ -73,8 +73,9 @@ function App() {
                             type="text"
                             placeholder='Search Stocks...'
                             className="Search-Bar bg-[hsl(0,0%,3%)] rounded-md ml-2 p-2 w-[25vw] min-w-[300px] pl-10 focus:outline outline-1 outline-white"
+                            
                         />
-                        <Search className="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400" />
+                        <button><Search className="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-gray-300" /></button>
                     </div>
                 </div>
 

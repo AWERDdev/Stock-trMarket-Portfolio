@@ -19,16 +19,16 @@ function Stock({ stockData }) {
     const changeColorClass = isPositiveChange ? 'text-green-500' : 'text-red-500'
 
     return (
-        <div className="StockItem p-4 hover:bg-[hsl(0,0%,9%)] transition-colors">
-            <div className="flex items-center justify-between max-w-7xl mx-auto">
+        <div className="StockItem p-4 hover:bg-[hsl(0,0%,9%)] transition-colors overflow-x-auto">
+            <div className="flex items-center justify-between mx-auto min-w-[620px] w-full">
                 {/* Stock Info Section */}
-                <div className="flex items-center space-x-8 w-1/3">
+                <div className="flex items-center space-x-8 w-1/3 whitespace-nowrap">
                     <h3 className="symbol font-medium">{stockData.symbol}</h3>
                     <span className="name text-gray-400">{stockData.name}</span>
                 </div>
                
                 {/* Price Info Section */}
-                <div className="flex items-center justify-center space-x-8 w-1/3">
+                <div className="flex items-center justify-center space-x-8 w-1/3 whitespace-nowrap">
                     <div className="price">{stockData.price}</div>
                     <div className={`change flex items-center ${changeColorClass}`}>
                         {trendingIcon}
@@ -40,7 +40,7 @@ function Stock({ stockData }) {
                 </div>
                
                 {/* Action Button */}
-                <div className="w-1/3 flex justify-end">
+                <div className="w-1/3 flex justify-end whitespace-nowrap">
                     <button className="px-4 py-2 rounded-md hover:bg-[hsl(0,0%,9%)] hover:outline-[hsl(0,0%,9%)] transition-colors">
                         Add to Watchlist
                     </button>
@@ -51,4 +51,5 @@ function Stock({ stockData }) {
 }
 
 export default Stock
+
 
