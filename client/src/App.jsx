@@ -8,6 +8,7 @@ import Stock from './components/Stock'
 
 function App() {
     const [isAUTH, setisAUTH] = useState(false);
+    const [StockData,setStockData] = useState([])
 
     const handleLogout = async () => {
         localStorage.removeItem('token');
@@ -30,11 +31,22 @@ function App() {
         setisAUTH(data.AUTH);
     }
 
+    const ReciveStock = async ()=>{
+        const response = await fetch('http://localhost:3500/Stock');
+        const Stockdata = await response.json();
+        console.log(Stockdata);
+        setStockData(Stockdata);
+    
+    }
+
+
     useEffect(() => {
         HandleNavBar();
+        ReciveStock();
     }, []);
+  
     return (
-        <main className="h-screen w-screen text-[#ffffff] dark:bg-gray-900">
+        <main className="h-[100%] w-screen text-[#ffffff] dark:bg-gray-900 ">
             {isAUTH ? <NavBarNoAUTH handleLogout={handleLogout} /> : <NavBar />}
 
             <div className="Body-container grid gap-5 mt-5">
@@ -66,7 +78,7 @@ function App() {
                     </div>
                 </div>
 
-                <div className="StocksContainer gird justify-self-center bg-[hsl(0,0%,3%)] rounded-md w-[90vw] h-full outline outline-1 outline-gray-600  max-w-7xl mx-auto shadow-lg">
+                <div className="StocksContainer  gird justify-self-center bg-[hsl(0,0%,3%)] rounded-md w-[90vw] h-full outline outline-1 outline-gray-600  max-w-7xl mx-auto shadow-lg">
                     <div className="text ml-[2rem]">
                         <h1 className='text-[1.5rem] font-bold'>Stock Data</h1>
                     </div>
@@ -75,8 +87,12 @@ function App() {
                             <INFOBar/>
                         </div>
                         <div className="Stock-Container "> 
-
-                            <Stock/>
+                        {StockData.map((stock, index) => (
+                         <Stock 
+                             key={index}
+                            stockData={stock}
+                        />
+                       ))}
                         </div>
                        
                     </div>
