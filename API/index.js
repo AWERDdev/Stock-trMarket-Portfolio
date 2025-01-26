@@ -10,6 +10,10 @@ const bcrypt = require('bcrypt');
 const fs = require('fs');
 const path = require('path');
 //* CORS
+app.use(cors({
+    origin: '*',
+    methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'OPTIONS'],
+}));
 
 app.use(cors({
     origin: 'https://stockmarket-frontend-ebon.vercel.app',
