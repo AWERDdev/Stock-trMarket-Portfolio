@@ -9,10 +9,6 @@ const mongoose = require("mongoose");
 const bcrypt = require('bcrypt');
 const fs = require('fs');
 const path = require('path');
-
-//* values
-let Authintacated = false
-const JWT_SECRET = process.env.JWT_SECRET || 'your-secret-key';
 //* CORS
 
 app.use(cors({
@@ -31,6 +27,10 @@ app.use((req, res, next) => {
     res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization');
     next();
 });
+
+//* values
+let Authintacated = false
+const JWT_SECRET = process.env.JWT_SECRET || 'your-secret-key';
 
 //* middleware
 app.use(express.json());
