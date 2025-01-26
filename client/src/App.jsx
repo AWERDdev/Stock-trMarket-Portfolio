@@ -6,7 +6,7 @@ import { Search } from 'lucide-react'
 import INFOBar from './components/INFOBar'
 import Stock from './components/Stock'
 import StockWatchList from './components/StockWatchList'
-import { API_BASE_URL } from './Config'
+import { API_BASE_URL } from './config'
 
 function App() {
     const [isAUTH, setisAUTH] = useState(false);

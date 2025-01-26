@@ -1,7 +1,7 @@
 import NavBarNoAUTH from '../components/NavBarNoAUTH2.jsx';
 import { useNavigate } from 'react-router-dom'; // Update this import
 import { useState } from 'react';
-import { API_BASE_URL } from '../Config'
+import { API_BASE_URL } from '../config'
 function LoginPage(){
     
     const navigate = useNavigate(); // Initialize the navigate hook
