@@ -16,11 +16,11 @@ const JWT_SECRET = process.env.JWT_SECRET || 'your-secret-key';
 //* CORS
 //https://stock-market-f.vercel.app/
 app.use(cors({
-  origin: ['https://stock-market-f.vercel.app/', 'http://localhost:5173'],
-  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
-  credentials: true
-}));
-
+    origin: ['https://stock-market-f.vercel.app', 'http://localhost:5173'],
+    methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+    credentials: true
+  }));
+  
 app.use((req, res, next) => {
     res.header('Access-Control-Allow-Origin', '*');
     res.header('Access-Control-Allow-Methods', 'GET, POST, OPTIONS');
