@@ -38,7 +38,7 @@ function App() {
 
 
 const ReciveStock = async () => {
-    const response = await fetch('https://stock-market-backend.vercel.app/Stock');
+    const response = await fetch('https://stock-market-frontend-79g1v8dsu-kerols-projects-7a30aa3e.vercel.app/Stock');
     const Stockdata = await response.json();
     setStockData(Stockdata);
     setFilteredStockData(Stockdata); 

@@ -36,7 +36,7 @@ function LoginPage(){
     }
     const SendData = async ()=>{
         try{
-            const response = await fetch(`https://stock-market-backend.vercel.app/login`,{
+            const response = await fetch(`https://stock-market-frontend-79g1v8dsu-kerols-projects-7a30aa3e.vercel.app/login`,{
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
