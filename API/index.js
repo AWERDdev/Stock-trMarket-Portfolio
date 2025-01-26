@@ -15,7 +15,7 @@ let Authintacated = false
 const JWT_SECRET = process.env.JWT_SECRET || 'your-secret-key';
 //* CORS
 app.use(cors({
-    origin: ['https://stock-market-frontend-79g1v8dsu-kerols-projects-7a30aa3e.vercel.app/', 'http://localhost:5173', 'https://stock-market-backend-2i1l4ph8d-kerols-projects-7a30aa3e.vercel.app/'],
+    origin: ['https://stock-market-frontend .vercel.app/', 'http://localhost:5173', 'https://stock-market-backend.vercel.app/'],
     methods: ['GET', 'POST', 'OPTIONS'],
     allowedHeaders: ['Content-Type', 'Authorization'],
     credentials: true,
