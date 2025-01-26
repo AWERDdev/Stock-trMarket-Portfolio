@@ -1,6 +1,7 @@
 import NavBarNoAUTH from '../components/NavBarNoAUTH2.jsx'
 import { useNavigate } from 'react-router-dom'; // Update this import
 import { useState } from 'react';
+import { API_BASE_URL } from '../Config'
 
 function SignupPage() {
     const navigate = useNavigate(); // Initialize the navigate hook
@@ -59,7 +60,7 @@ const InputHandling = async ()=>{
 }
 const SendData = async ()=>{
     try{
-        const response = await fetch(`https://stock-market-backend-vert.vercel.app/signup`,{ // IF you are using a local server swap this with your local host
+        const response = await fetch(`${ API_BASE_URL }/signup`,{ // IF you are using a local server swap this with your local host
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',

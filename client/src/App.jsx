@@ -6,6 +6,7 @@ import { Search } from 'lucide-react'
 import INFOBar from './components/INFOBar'
 import Stock from './components/Stock'
 import StockWatchList from './components/StockWatchList'
+import { API_BASE_URL } from './Config'
 
 function App() {
     const [isAUTH, setisAUTH] = useState(false);
@@ -25,7 +26,7 @@ function App() {
 
     const HandleNavBar = async () => {
         // console.log("Current token:", localStorage.getItem('token'));
-        const response = await fetch('https://stock-market-backend-vert.vercel.app/isAUTH'|'http://localhost:3500/isAUTH', {
+        const response = await fetch(`${API_BASE_URL}/isAUTH`, {
             headers: {
                 'Authorization': `Bearer ${localStorage.getItem('token')}`
             }
@@ -38,7 +39,7 @@ function App() {
 
 
 const ReciveStock = async () => {
-    const response = await fetch('https://stock-market-backend-vert.vercel.app/Stock'|'http://localhost:3500/Stock');
+    const response = await fetch(`${API_BASE_URL}/Stock`);
     const Stockdata = await response.json();
     setStockData(Stockdata);
     setFilteredStockData(Stockdata); 

@@ -1,6 +1,7 @@
 import NavBarNoAUTH from '../components/NavBarNoAUTH2.jsx';
 import { useNavigate } from 'react-router-dom'; // Update this import
 import { useState } from 'react';
+import { API_BASE_URL } from '../Config'
 function LoginPage(){
     
     const navigate = useNavigate(); // Initialize the navigate hook
@@ -36,7 +37,7 @@ function LoginPage(){
     }
     const SendData = async ()=>{
         try{
-            const response = await fetch(`https://stock-market-backend-vert.vercel.app/login`,{
+            const response = await fetch(`${ API_BASE_URL }/login`,{
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
