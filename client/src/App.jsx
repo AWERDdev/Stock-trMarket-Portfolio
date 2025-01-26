@@ -25,7 +25,7 @@ function App() {
 
     const HandleNavBar = async () => {
         // console.log("Current token:", localStorage.getItem('token'));
-        const response = await fetch('https://stock-market-backend-vert.vercel.app/isAUTH', {
+        const response = await fetch('https://stock-market-backend-vert.vercel.app/isAUTH'|'http://localhost:3500/isAUTH', {
             headers: {
                 'Authorization': `Bearer ${localStorage.getItem('token')}`
             }
@@ -38,7 +38,7 @@ function App() {
 
 
 const ReciveStock = async () => {
-    const response = await fetch('https://stock-market-backend-vert.vercel.app/Stock');
+    const response = await fetch('https://stock-market-backend-vert.vercel.app/Stock'|'http://localhost:3500/Stock');
     const Stockdata = await response.json();
     setStockData(Stockdata);
     setFilteredStockData(Stockdata); 
