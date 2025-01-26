@@ -16,12 +16,14 @@ const JWT_SECRET = process.env.JWT_SECRET || 'your-secret-key';
 //* CORS
 //https://stock-market-f.vercel.app/
 app.use(cors({
-    origin: ['https://stockmarket-frontend-ebon.vercel.app/', 'http://localhost:5173', 'https://stockmarket-backend.vercel.app/'],
-    methods: ['GET', 'POST', 'OPTIONS'],
-    allowedHeaders: ['Content-Type', 'Authorization'],
+    origin: 'https://stockmarket-frontend-ebon.vercel.app',
+    methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
     credentials: true,
-    maxAge: 86400
-}));
+    allowedHeaders: ['Content-Type', 'Authorization', 'Access-Control-Allow-Origin']
+  }));
+  
+  
+  app.options('*', cors());
 
 app.use((req, res, next) => {
     res.header('Access-Control-Allow-Origin', '*');
