@@ -14,7 +14,7 @@ const path = require('path');
 let Authintacated = false
 const JWT_SECRET = process.env.JWT_SECRET || 'your-secret-key';
 //* CORS
-//https://stock-market-f.vercel.app/
+
 app.use(cors({
     origin: 'https://stockmarket-frontend-ebon.vercel.app',
     methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
