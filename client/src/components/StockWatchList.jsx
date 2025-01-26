@@ -10,10 +10,10 @@ Stock.propTypes = {
         volume: PropTypes.string.isRequired
     }).isRequired,
     // addToWatchlist should be at the same level as stockData
-    addToWatchlist: PropTypes.func.isRequired
+    RemovefromWatchlist: PropTypes.func.isRequired
 }
 
-function Stock({ stockData,addToWatchlist }) {
+function Stock({stockData,RemovefromWatchlist}) {
 
     const isPositiveChange = parseFloat(stockData.change) >= 0
     const trendingIcon = isPositiveChange ? 
@@ -45,9 +45,9 @@ function Stock({ stockData,addToWatchlist }) {
                 {/* Action Button */}
                 <div className="w-1/3 flex justify-end whitespace-nowrap">
                     <button className="px-4 py-2 rounded-md hover:bg-[hsl(0,0%,9%)] hover:outline-[hsl(0,0%,9%)] transition-colors"
-                    onClick={()=>{addToWatchlist(stockData)}}
+                    onClick={()=>{RemovefromWatchlist(stockData)}}
                     >
-                        Add to Watchlist
+                        X
                     </button>
                 </div>
             </div>

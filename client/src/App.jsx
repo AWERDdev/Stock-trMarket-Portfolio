@@ -5,11 +5,16 @@ import { useState, useEffect } from 'react'
 import { Search } from 'lucide-react'
 import INFOBar from './components/INFOBar'
 import Stock from './components/Stock'
+import StockWatchList from './components/StockWatchList'
 
 function App() {
     const [isAUTH, setisAUTH] = useState(false);
     const [StockData,setStockData] = useState([])
- 
+    const [filteredStockData, setFilteredStockData] = useState([]);
+    const [searchValue, setSearchValue] = useState('');
+    const [watchlist, setWatchlist] = useState([]);
+
+
     const handleLogout = async () => {
         localStorage.removeItem('token');
         // console.log("Token removed from localStorage");
@@ -31,15 +36,37 @@ function App() {
         setisAUTH(data.AUTH);
     }
 
-    const ReciveStock = async ()=>{
-        const response = await fetch('http://localhost:3500/Stock');
-        const Stockdata = await response.json();
-        // console.log(Stockdata);
-        setStockData(Stockdata);
-    
-    }
-   
 
+const ReciveStock = async () => {
+    const response = await fetch('http://localhost:3500/Stock');
+    const Stockdata = await response.json();
+    setStockData(Stockdata);
+    setFilteredStockData(Stockdata); 
+}
+
+
+const handleSearch = (e) => {
+    const value = e.target.value;
+    setSearchValue(value);
+    
+    const filtered = StockData.filter(stock => 
+        stock.name.toLowerCase().includes(value.toLowerCase()) ||
+        stock.symbol.toLowerCase().includes(value.toLowerCase())
+    );
+    setFilteredStockData(filtered);
+}
+    const addToWatchlist = (stock) => {
+    if (!watchlist.some(item => item.symbol === stock.symbol)) {
+        setWatchlist([...watchlist, stock]);
+        console.log(`Added ${stock.name} to watchlist`);
+    }
+    };
+    const RemovefromWatchlist = (stock) => {
+        const updatedWatchlist = watchlist.filter(item => item.symbol !== stock.symbol);
+        setWatchlist(updatedWatchlist);
+        console.log(`Removed ${stock.name} from watchlist`);
+    };
+        
     useEffect(() => {
         HandleNavBar();
         ReciveStock();
@@ -49,7 +76,7 @@ function App() {
         <main className="h-[100%] w-screen text-[#ffffff] dark:bg-gray-900 ">
             {isAUTH ? <NavBarNoAUTH handleLogout={handleLogout} /> : <NavBar />}
 
-            <div className="Body-container grid gap-5 mt-5">
+            <div className="Body-container grid gap-5 mt-5 h-[100%]">
                 <div className='MarketOverview grid bg-[hsl(0,0%,3%)] gap-4 rounded outline outline-1 outline-gray-500 justify-self-center w-[70vw] h-[auto] p-4 ml-10'>
                     <div className="header">
                         <div className="text text-[1.5rem] font-bold h-auto">Market Overview</div>
@@ -73,6 +100,8 @@ function App() {
                             type="text"
                             placeholder='Search Stocks...'
                             className="Search-Bar bg-[hsl(0,0%,3%)] rounded-md ml-2 p-2 w-[25vw] min-w-[300px] pl-10 focus:outline outline-1 outline-white"
+                            onChange={handleSearch}
+                            value={searchValue}
                             
                         />
                         <button><Search className="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-gray-300" /></button>
@@ -88,22 +117,34 @@ function App() {
                             <INFOBar/>
                         </div>
                         <div className="Stock-Container "> 
-                        {StockData.map((stock, index) => (
-                         <Stock 
-                             key={index}
-                            stockData={stock}
-                        />
-                       ))}
+                        {filteredStockData.map((stock, index) => (
+    <Stock 
+        key={index}
+        stockData={stock}
+        addToWatchlist={addToWatchlist}
+    />
+))}
                         </div>
                        
                     </div>
                 </div>
 
-                <div className="WachtList-Container gird gap-[20rem] justify-self-center bg-[hsl(0,0%,3%)] rounded-md w-[90vw] h-full outline outline-1 outline-gray-600 max-w-7xl mx-auto  shadow-lg">
+                <div className="WachtList-Container gird gap-[20rem] justify-self-center bg-[hsl(0,0%,3%)] rounded-md w-[90vw] h-[100%] outline outline-1 outline-gray-600 max-w-7xl mx-auto  shadow-lg">
                     <div className="text ml-[2rem]">
                         <h1 className='text-[1.5rem] font-bold'>Your Watchlist</h1>
                     </div>
-                    <INFOBar/>
+                    <div className="INfo-Stocks">
+                            <INFOBar/>
+                        </div>
+                        <div className="stock-container">
+                            {watchlist.map((stock, index) => (
+    <StockWatchList
+        key={index}
+        stockData={stock}
+        RemovefromWatchlist={RemovefromWatchlist}
+    />
+))}
+                        </div>
                 </div>
             </div>
         </main>
