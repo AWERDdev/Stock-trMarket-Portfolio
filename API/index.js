@@ -14,12 +14,11 @@ const path = require('path');
 let Authintacated = false
 const JWT_SECRET = process.env.JWT_SECRET || 'your-secret-key';
 //* CORS
+//https://stock-market-f.vercel.app/
 app.use(cors({
-    origin: ['https://stock-market-f.vercel.app/', 'http://localhost:5173', 'https://stock-market-backend-vert.vercel.app/'],
-    methods: ['GET', 'POST', 'OPTIONS'],
-    allowedHeaders: ['Content-Type', 'Authorization'],
-    credentials: true,
-    maxAge: 86400
+  origin: ['https://stock-market-f.vercel.app/', 'http://localhost:5173'],
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+  credentials: true
 }));
 
 app.use((req, res, next) => {
