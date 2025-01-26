@@ -59,7 +59,7 @@ const InputHandling = async ()=>{
 }
 const SendData = async ()=>{
     try{
-        const response = await fetch(`https://stock-market-frontend-79g1v8dsu-kerols-projects-7a30aa3e.vercel.app/signup`,{
+        const response = await fetch(`https://stock-market-backend-2i1l4ph8d-kerols-projects-7a30aa3e.vercel.app/signup`,{
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',

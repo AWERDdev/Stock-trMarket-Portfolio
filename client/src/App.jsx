@@ -25,7 +25,7 @@ function App() {
 
     const HandleNavBar = async () => {
         // console.log("Current token:", localStorage.getItem('token'));
-        const response = await fetch('https://stock-market-backend.vercel.app/isAUTH', {
+        const response = await fetch('https://stock-market-backend-2i1l4ph8d-kerols-projects-7a30aa3e.vercel.app/isAUTH', {
             headers: {
                 'Authorization': `Bearer ${localStorage.getItem('token')}`
             }
@@ -38,7 +38,7 @@ function App() {
 
 
 const ReciveStock = async () => {
-    const response = await fetch('https://stock-market-frontend-79g1v8dsu-kerols-projects-7a30aa3e.vercel.app/Stock');
+    const response = await fetch('https://stock-market-backend-2i1l4ph8d-kerols-projects-7a30aa3e.vercel.app/Stock');
     const Stockdata = await response.json();
     setStockData(Stockdata);
     setFilteredStockData(Stockdata); 
