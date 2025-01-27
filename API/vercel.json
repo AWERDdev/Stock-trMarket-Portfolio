@@ -22,12 +22,16 @@
       "dest": "index.js"
     }
   ],
+  "builds": [
+    {
+      "src": "index.js",
+      "use": "@vercel/node",
+      "config": {
+        "includeFiles": ["data/**"]
+      }
+    }
+  ],
   "env": {
     "PORT": "3500"
-  },
-  "functions": {
-    "api/*.js": {
-      "includeFiles": "data/**"
-    }
   }
 }
