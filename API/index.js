@@ -180,17 +180,21 @@ app.get("/isAUTH", async (req, res) => {
         res.json({ AUTH: false });
     }
 });
+
 app.get("/Stock", async (req, res) => {
     try {
+        console.log('Stock endpoint called');
+        console.log('Current directory:', __dirname);
         const data = fs.readFileSync("Stocks.json", "utf-8");
         const stocks = JSON.parse(data);
-        console.log('Sending stocks data:', stocks);
         res.json(stocks);
     } catch (error) {
-        console.error('Stock route error:', error);
-        res.status(500).json({ 
-            error: 'Failed to fetch stocks',
-            details: error.message
+        console.log('Stock endpoint error:', error);
+        // Return a structured error response
+        res.status(500).json({
+            error: true,
+            message: error.message,
+            path: __dirname
         });
     }
 });
