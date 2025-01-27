@@ -8,6 +8,22 @@
   ],
   "routes": [
     {
+      "src": "/signup",
+      "dest": "index.js"
+    },
+    {
+      "src": "/login",
+      "dest": "index.js"
+    },
+    {
+      "src": "/Stock",
+      "dest": "index.js"
+    },
+    {
+      "src": "/api/(.*)",
+      "dest": "index.js"
+    },
+    {
       "src": "/(.*)",
       "dest": "index.js"
     }
@@ -15,7 +31,9 @@
   "env": {
     "PORT": "3500"
   },
-  "files": [
-    "Stocks.json"
-  ]
+  "functions": {
+    "api/*.js": {
+      "includeFiles": "data/**"
+    }
+  }
 }
