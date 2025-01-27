@@ -140,7 +140,7 @@ useEffect(() => {
                             value={searchValue}
                             
                         />
-                        <button><Search className="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-gray-300" /></button>
+                        <button><Search className="absolute left-4 top-1/3 transform -translate-y-1/2 text-gray-400 hover:text-gray-300" /></button>
                     </div>
                 </div>
 
