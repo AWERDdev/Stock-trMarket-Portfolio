@@ -69,7 +69,7 @@ function LoginPage(){
     }
     const SendData = async ()=>{
         try{
-            const response = await fetch(`${ API_BASE_URL }login`,fetchOptions,{
+            const response = await fetch(`${ API_BASE_URL }/login`,fetchOptions,{
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',

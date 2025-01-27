@@ -93,7 +93,7 @@ const InputHandling = async ()=>{
 }
 const SendData = async ()=>{
     try{
-        const response = await fetch(`${ API_BASE_URL }signup`,fetchOptions,{ // IF you are using a local server swap this with your local host
+        const response = await fetch(`${ API_BASE_URL }/signup`,fetchOptions,{ // IF you are using a local server swap this with your local host
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
