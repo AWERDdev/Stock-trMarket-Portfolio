@@ -183,9 +183,10 @@ app.get("/isAUTH", async (req, res) => {
 
 app.get("/Stock", async (req, res) => {
     try {
+        const stocksPath = path.join(__dirname, 'data', 'Stocks.json');
         console.log('Stock endpoint called');
         console.log('Current directory:', __dirname);
-        const data = fs.readFileSync("Stocks.json", "utf-8");
+        const data = fs.readFileSync(stocksPath, "utf-8");
         const stocks = JSON.parse(data);
         res.json(stocks);
     } catch (error) {
