@@ -63,16 +63,18 @@ function App() {
         setisAUTH(data.AUTH);
     }
 
-
-const ReciveStock = async () => {
-    const response = await fetch(`${API_BASE_URL}/Stock`,{
-        'Content-Type': 'application/json'
-    });
-    const Stockdata = await response.json();
-    setStockData(Stockdata);
-    setFilteredStockData(Stockdata); 
-}
-
+    const ReciveStock = async () => {
+        const response = await fetch(`${API_BASE_URL}/Stock`);
+        const data = await response.json();
+        console.log('Received data type:', typeof data, Array.isArray(data));
+        if (!Array.isArray(data)) {
+            console.error('Expected array but got:', data);
+            return [];
+        }
+        setStockData(data);
+        setFilteredStockData(data);
+    }
+    
 
 const handleSearch = (e) => {
     const value = e.target.value;

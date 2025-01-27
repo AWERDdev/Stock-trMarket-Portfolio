@@ -184,12 +184,14 @@ app.get("/Stock", async (req, res) => {
     try {
         const data = fs.readFileSync("Stocks.json", "utf-8");
         const stocks = JSON.parse(data);
+        console.log('Sending stocks data:', stocks);
         res.json(stocks);
-        const searchTerm = req.query.search;
-        console.log(searchTerm);
     } catch (error) {
-        console.log(error);
-        res.status(500).json({ error: `Failed to fetch stocks ${error}` });
+        console.error('Stock route error:', error);
+        res.status(500).json({ 
+            error: 'Failed to fetch stocks',
+            details: error.message
+        });
     }
 });
 

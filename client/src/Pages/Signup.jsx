@@ -99,6 +99,7 @@ const SendData = async ()=>{
                 Password
             }),
         });
+        console.log('API_BASE_URL:', API_BASE_URL);
         const data = await response.json();
         if (data.token) {
             console.log("token stored in local storage");
