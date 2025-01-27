@@ -10,22 +10,33 @@ const bcrypt = require('bcrypt');
 const fs = require('fs');
 const path = require('path');
 //* CORS
-app.use(cors({
-    origin: '*',
-    methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'OPTIONS'],
-}));
 
 app.use(cors({
-    origin: 'https://stockmarket-frontend-ebon.vercel.app',
+    origin: [
+        'https://stockmarket-frontend-ebon.vercel.app',
+        'http://localhost:5173',
+        'https://stockmarket-backend.vercel.app'
+    ],
     methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
     credentials: true,
     allowedHeaders: ['Content-Type', 'Authorization', 'Access-Control-Allow-Origin']
-  }));
-  
-  app.use((req, res, next) => {
-    res.header('Access-Control-Allow-Origin', 'https://stockmarket-frontend-ebon.vercel.app');
+}));
+
+app.use((req, res, next) => {
+    const allowedOrigins = [
+        'https://stockmarket-frontend-ebon.vercel.app',
+        'http://localhost:5173',
+        'https://stockmarket-backend.vercel.app'
+    ];
+    const origin = req.headers.origin;
+    
+    if (allowedOrigins.includes(origin)) {
+        res.header('Access-Control-Allow-Origin', origin);
+    }
+    
     res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
     res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization');
+    res.header('Access-Control-Allow-Credentials', 'true');
     res.header('Access-Control-Max-Age', '86400');
     
     if (req.method === 'OPTIONS') {
@@ -41,6 +52,12 @@ const JWT_SECRET = process.env.JWT_SECRET || 'your-secret-key';
 //* middleware
 app.use(express.json());
 app.use(express.urlencoded({extended:true}));
+app.use((req, res, next) => {
+    console.log(`${new Date().toISOString()} - ${req.method} ${req.url}`);
+    console.log('Headers:', req.headers);
+    console.log('Body:', req.body);
+    next();
+});
 
 //* database
 mongoose.connect('mongodb://localhost:27017/stockmarket')
@@ -174,6 +191,17 @@ app.get("/Stock", async (req, res) => {
         console.log(error);
         res.status(500).json({ error: `Failed to fetch stocks ${error}` });
     }
+});
+
+app.get('/health', (req, res) => {
+    res.json({
+        status: 'ok',
+        timestamp: new Date().toISOString(),
+        cors: {
+            origin: req.headers.origin,
+            method: req.method
+        }
+    });
 });
 
 

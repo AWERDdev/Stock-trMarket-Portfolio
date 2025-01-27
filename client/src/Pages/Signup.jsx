@@ -13,7 +13,34 @@ function SignupPage() {
     const [nameError, setNameError] = useState('');
     const [EmailError, setEmailError] = useState('');
     const [PasswordError, setPasswordError] = useState('');
-       
+    
+    const fetchWithErrorTracking = async (url, options) => {
+        try {
+            const response = await fetch(url, options);
+            console.log(`Request to ${url}:`, {
+                status: response.status,
+                headers: Object.fromEntries(response.headers),
+                ok: response.ok
+            });
+            
+            if (!response.ok) {
+                const errorData = await response.text();
+                console.error('Response error:', errorData);
+                throw new Error(`HTTP error! status: ${response.status}`);
+            }
+            
+            return response;
+        } catch (error) {
+            console.error('Fetch error:', {
+                message: error.message,
+                url,
+                options
+            });
+            throw error;
+        }
+    };
+    
+    fetchWithErrorTracking()
 const InputHandling = async ()=>{
     const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     setUsernameError('');

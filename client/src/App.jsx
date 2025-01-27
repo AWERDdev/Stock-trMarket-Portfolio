@@ -15,7 +15,32 @@ function App() {
     const [searchValue, setSearchValue] = useState('');
     const [watchlist, setWatchlist] = useState([]);
 
-
+    const fetchWithErrorTracking = async (url, options) => {
+        try {
+            const response = await fetch(url, options);
+            console.log(`Request to ${url}:`, {
+                status: response.status,
+                headers: Object.fromEntries(response.headers),
+                ok: response.ok
+            });
+            
+            if (!response.ok) {
+                const errorData = await response.text();
+                console.error('Response error:', errorData);
+                throw new Error(`HTTP error! status: ${response.status}`);
+            }
+            
+            return response;
+        } catch (error) {
+            console.error('Fetch error:', {
+                message: error.message,
+                url,
+                options
+            });
+            throw error;
+        }
+    };
+    
     const handleLogout = async () => {
         localStorage.removeItem('token');
         // console.log("Token removed from localStorage");
@@ -72,6 +97,7 @@ const handleSearch = (e) => {
     };
         
     useEffect(() => {
+        fetchWithErrorTracking();
         HandleNavBar();
         ReciveStock();
     }, []);
