@@ -129,6 +129,8 @@ const functionHandling = async() => {
         navigate('/MainApp');
     }
 }
+console.log('Current API_BASE_URL:', API_BASE_URL);
+console.log('Current route:', window.location.pathname);
 
     return (
         

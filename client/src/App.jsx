@@ -103,7 +103,11 @@ const handleSearch = (e) => {
         HandleNavBar();
         ReciveStock();
     }, []);
-  
+useEffect(() => {
+    console.log('Current API_BASE_URL:', API_BASE_URL);
+    console.log('Current route:', window.location.pathname);
+}, []);
+
     return (
         <main className="h-[100%] w-screen text-[#ffffff] dark:bg-gray-900 ">
             {isAUTH ? <NavBarNoAUTH handleLogout={handleLogout} /> : <NavBar />}
