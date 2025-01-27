@@ -28,7 +28,8 @@ function App() {
         // console.log("Current token:", localStorage.getItem('token'));
         const response = await fetch(`${API_BASE_URL}/isAUTH`, {
             headers: {
-                'Authorization': `Bearer ${localStorage.getItem('token')}`
+                'Authorization': `Bearer ${localStorage.getItem('token')}`,
+                'Content-Type': 'application/json'
             }
         });
          const data = await response.json();
@@ -39,7 +40,9 @@ function App() {
 
 
 const ReciveStock = async () => {
-    const response = await fetch(`${API_BASE_URL}/Stock`);
+    const response = await fetch(`${API_BASE_URL}/Stock`,{
+        'Content-Type': 'application/json'
+    });
     const Stockdata = await response.json();
     setStockData(Stockdata);
     setFilteredStockData(Stockdata); 
