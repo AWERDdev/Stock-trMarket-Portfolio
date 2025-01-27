@@ -13,7 +13,13 @@ function SignupPage() {
     const [nameError, setNameError] = useState('');
     const [EmailError, setEmailError] = useState('');
     const [PasswordError, setPasswordError] = useState('');
-    
+    const fetchOptions = {
+        credentials: 'include',
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      };
+            
     const fetchWithErrorTracking = async (url, options) => {
         try {
             const response = await fetch(url, options);
@@ -87,7 +93,7 @@ const InputHandling = async ()=>{
 }
 const SendData = async ()=>{
     try{
-        const response = await fetch(`${ API_BASE_URL }/signup`,{ // IF you are using a local server swap this with your local host
+        const response = await fetch(`${ API_BASE_URL }/signup`,fetchOptions,{ // IF you are using a local server swap this with your local host
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',

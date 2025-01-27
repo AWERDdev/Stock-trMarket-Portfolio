@@ -15,6 +15,13 @@ function App() {
     const [searchValue, setSearchValue] = useState('');
     const [watchlist, setWatchlist] = useState([]);
 
+    const fetchOptions = {
+        credentials: 'include',
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      };
+      
     const fetchWithErrorTracking = async (url, options) => {
         try {
             const response = await fetch(url, options);
@@ -51,7 +58,7 @@ function App() {
 
     const HandleNavBar = async () => {
         // console.log("Current token:", localStorage.getItem('token'));
-        const response = await fetch(`${API_BASE_URL}/isAUTH`, {
+        const response = await fetch(`${API_BASE_URL}/isAUTH`,fetchOptions, {
             headers: {
                 'Authorization': `Bearer ${localStorage.getItem('token')}`,
                 'Content-Type': 'application/json'
@@ -64,7 +71,7 @@ function App() {
     }
 
     const ReciveStock = async () => {
-        const response = await fetch(`${API_BASE_URL}/Stock`);
+        const response = await fetch(`${API_BASE_URL}/Stock`,fetchOptions);
         const data = await response.json();
         console.log('Received data type:', typeof data, Array.isArray(data));
         if (!Array.isArray(data)) {
@@ -103,10 +110,10 @@ const handleSearch = (e) => {
         HandleNavBar();
         ReciveStock();
     }, []);
-useEffect(() => {
+    
     console.log('Current API_BASE_URL:', API_BASE_URL);
     console.log('Current route:', window.location.pathname);
-}, []);
+
 
     return (
         <main className="h-[100%] w-screen text-[#ffffff] dark:bg-gray-900 ">

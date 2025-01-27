@@ -10,7 +10,13 @@ function LoginPage(){
     const [EmailError, setEmailError] = useState('');
     const [PasswordError, setPasswordError] = useState('');
     const [InvalidCredentialsError, setInvalidCredentialsError] = useState('');
-    
+    const fetchOptions = {
+        credentials: 'include',
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      };
+      
     const fetchWithErrorTracking = async (url, options) => {
         try {
             const response = await fetch(url, options);
@@ -63,7 +69,7 @@ function LoginPage(){
     }
     const SendData = async ()=>{
         try{
-            const response = await fetch(`${ API_BASE_URL }/login`,{
+            const response = await fetch(`${ API_BASE_URL }/login`,fetchOptions,{
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
