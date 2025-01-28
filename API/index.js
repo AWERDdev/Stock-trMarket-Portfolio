@@ -62,7 +62,25 @@ app.use((req, res, next) => {
 //* database
 mongoose.connect('mongodb://localhost:27017/stockmarket',{
     serverSelectionTimeoutMS: 5000,
-    socketTimeoutMS: 5000
+    socketTimeoutMS: 5000,
+    connectTimeoutMS: 10000,
+    maxPoolSize: 10,
+    minPoolSize: 5,
+    family: 4,
+    keepAlive: true,
+    keepAliveInitialDelay: 300000,
+    autoIndex: true,
+    retryWrites: true,
+    w: 'majority',
+    retryReads: true,
+    useNewUrlParser: true
+})
+mongoose.connection.on('error', (err) => {
+    console.log('MongoDB connection error:', err);
+})
+
+mongoose.connection.on('connected', () => {
+    console.log('Connected to MongoDB successfully!');
 })
 .then(() => console.log('Connected to MongoDB'))
 .catch(err => console.error('MongoDB connection error:', err));
