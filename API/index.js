@@ -87,7 +87,7 @@ const User = mongoose.model('User', userSchema);
 app.get("/",(req,res)=>{
     res.json({message:"welcome to the stock market API 👍👍"});
 })
-//* signup  
+//* signup 
 app.post("/signup", async(req,res)=>{
     try {
         console.log("Starting signup process")
@@ -120,7 +120,7 @@ app.post("/signup", async(req,res)=>{
 
         Authintacated = true
         console.log("Authentication set to true")
-        res.json({AUTH:Authintacated}) 
+        res.json({token:newUser.token,AUTH:Authintacated}) 
     } catch(error) {
         console.log("Error details:", error)
         Authintacated = false
@@ -138,6 +138,7 @@ app.post("/login", async(req,res)=>{
         if (user && isValidPassword) {
             Authintacated = true
             res.json({ 
+                token: user.token, 
                 message: "Login successful",
                 AUTH: Authintacated
             });
