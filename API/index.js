@@ -120,7 +120,7 @@ app.post("/signup", async(req,res)=>{
 
         Authintacated = true
         console.log("Authentication set to true")
-        res.json({token:newUser.token,AUTH:Authintacated}) 
+        res.json({AUTH:Authintacated}) 
     } catch(error) {
         console.log("Error details:", error)
         Authintacated = false
@@ -138,7 +138,6 @@ app.post("/login", async(req,res)=>{
         if (user && isValidPassword) {
             Authintacated = true
             res.json({ 
-                token: user.token, 
                 message: "Login successful",
                 AUTH: Authintacated
             });
