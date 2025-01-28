@@ -2,19 +2,23 @@
   "version": 2,
   "routes": [
     {
-      "src": "/signup",
+      "src": "/signup(?:/)?",
+      "methods": ["POST", "OPTIONS"],
       "dest": "index.js"
     },
     {
-      "src": "/login",
+      "src": "/login(?:/)?",
+      "methods": ["POST", "OPTIONS"],
       "dest": "index.js"
     },
     {
-      "src": "/Stock",
+      "src": "/Stock(?:/)?",
+      "methods": ["GET", "OPTIONS"],
       "dest": "index.js"
     },
     {
-      "src": "/api/(.*)",
+      "src": "/isAUTH(?:/)?",
+      "methods": ["GET", "OPTIONS"],
       "dest": "index.js"
     },
     {
@@ -30,8 +34,5 @@
         "includeFiles": ["data/**/*"]
       }
     }
-  ],
-  "env": {
-    "PORT": "3500"
-  }
+  ]
 }
