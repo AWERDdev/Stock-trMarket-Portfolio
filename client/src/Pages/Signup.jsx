@@ -13,40 +13,40 @@ function SignupPage() {
     const [nameError, setNameError] = useState('');
     const [EmailError, setEmailError] = useState('');
     const [PasswordError, setPasswordError] = useState('');
-    const fetchOptions = {
-        credentials: 'include',
-        headers: {
-          'Content-Type': 'application/json'
-        }
-      };
+    // const fetchOptions = {
+    //     credentials: 'include',
+    //     headers: {
+    //       'Content-Type': 'application/json'
+    //     }
+    //   };
             
-    const fetchWithErrorTracking = async (url, options) => {
-        try {
-            const response = await fetch(url, options);
-            console.log(`Request to ${url}:`, {
-                status: response.status,
-                headers: Object.fromEntries(response.headers),
-                ok: response.ok
-            });
+    // const fetchWithErrorTracking = async (url, options) => {
+    //     try {
+    //         const response = await fetch(url, options);
+    //         console.log(`Request to ${url}:`, {
+    //             status: response.status,
+    //             headers: Object.fromEntries(response.headers),
+    //             ok: response.ok
+    //         });
             
-            if (!response.ok) {
-                const errorData = await response.text();
-                console.error('Response error:', errorData);
-                throw new Error(`HTTP error! status: ${response.status}`);
-            }
+    //         if (!response.ok) {
+    //             const errorData = await response.text();
+    //             console.error('Response error:', errorData);
+    //             throw new Error(`HTTP error! status: ${response.status}`);
+    //         }
             
-            return response;
-        } catch (error) {
-            console.error('Fetch error:', {
-                message: error.message,
-                url,
-                options
-            });
-            throw error;
-        }
-    };
+    //         return response;
+    //     } catch (error) {
+    //         console.error('Fetch error:', {
+    //             message: error.message,
+    //             url,
+    //             options
+    //         });
+    //         throw error;
+    //     }
+    // };
     
-    fetchWithErrorTracking()
+    // fetchWithErrorTracking()
 const InputHandling = async ()=>{
     const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     setUsernameError('');
@@ -93,7 +93,7 @@ const InputHandling = async ()=>{
 }
 const SendData = async ()=>{
     try{
-        const response = await fetch(`${ API_BASE_URL }/signup`,fetchOptions,{ // IF you are using a local server swap this with your local host
+        const response = await fetch(`${ API_BASE_URL }/signup`,{ // IF you are using a local server swap this with your local host
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
