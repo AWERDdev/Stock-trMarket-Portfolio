@@ -4,6 +4,17 @@
     {
       "src": "/signup(?:/)?",
       "methods": ["POST", "OPTIONS"],
+      "dest": "index.js",
+      "headers": {
+        "Access-Control-Allow-Origin": "*",
+        "Access-Control-Allow-Methods": "GET,POST,OPTIONS",
+        "Access-Control-Allow-Headers": "*"
+      }
+    },
+ 
+    {
+      "src": "/signup(?:/)?",
+      "methods": ["POST", "OPTIONS"],
       "dest": "index.js"
     },
     {
@@ -31,13 +42,19 @@
       "src": "index.js",
       "use": "@vercel/node",
       "config": {
-        "includeFiles": ["data/**/*"]
+        "includeFiles": ["data/**/*"],
+        "maxLambdaSize": "50mb"
       }
     }
   ],
   "functions": {
     "api/*.js": {
-      "maxDuration": 30
+      "maxDuration": 60,
+      "memory": 3008
     }
+  },
+  "regions": ["iad1", "sfo1"],
+  "env": {
+    "NODE_ENV": "production"
   }
 }

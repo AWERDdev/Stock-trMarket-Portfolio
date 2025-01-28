@@ -99,7 +99,6 @@ const SendData = async ()=>{
 const functionHandling = async() => {
     const isValid = await InputHandling();
     if (isValid) {
-        SendData()
         navigate('/MainApp');
     }
 }
