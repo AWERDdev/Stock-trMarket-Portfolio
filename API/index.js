@@ -88,76 +88,89 @@ app.get("/",(req,res)=>{
     res.json({message:"welcome to the stock market API 👍👍"});
 })
 //* signup
-app.post("/signup", async(req,res)=>{
+app.post("/signup", async(req,res) => {
     try {
-        console.log("Starting signup process")
-        const {Username,name,Email, Password} = req.body
-        console.log("Got user data:", {Username,name,Email})
-
-        const existingUser = await User.findOne({ email: Email });
-
+        const {Username, name, Email, Password} = req.body;
+        
+        // Use lean() for faster query
+        const existingUser = await User.findOne({ email: Email }).lean();
+        
         if (existingUser) {
             return res.status(409).json({
                 message: "This email is already registered",
                 AUTH: false
             });
         }
-        console.log("Checking if user exists")
-        const token = jwt.sign(Email,JWT_SECRET)
-        const HasashPassword = await bcrypt.hash(Password,10)
+
+        // Run token generation and password hashing in parallel
+        const [token, HasashPassword] = await Promise.all([
+            jwt.sign(Email, JWT_SECRET),
+            bcrypt.hash(Password, 10)
+        ]);
 
         const newUser = new User({
             username: Username,
-            name: name,
+            name,
             email: Email,
             Password: HasashPassword,
-            token: token
-        })
-        console.log("About to save user")
-        
-        await newUser.save()
-        console.log("User saved successfully")
+            token
+        });
 
-        Authintacated = true
-        console.log("Authentication set to true")
-        res.json({token:newUser.token,AUTH:Authintacated}) 
-    } catch(error) {
-        console.log("Error details:", error)
-        Authintacated = false
-        res.status(400).send("failed to signup please try agian")
-    }
-})
-
-//* login
-app.post("/login", async(req,res)=>{
-    try {
-        const {Email,Password} = await req.body
-        const user = await User.findOne({email:Email})
-        const isValidPassword = await bcrypt.compare(Password, user.Password)
+        await newUser.save();
         
-        if (user && isValidPassword) {
-            Authintacated = true
-            res.json({ 
-                token: user.token, 
-                message: "Login successful",
-                AUTH: Authintacated
-            });
-        } else {
-            Authintacated = false
-            res.status(401).json({ 
-                message: "Invalid credentials please enter password and email correctly",
-                AUTH: Authintacated 
-            });
-        }
+        res.json({
+            token: newUser.token,
+            AUTH: true
+        });
+
     } catch(error) {
-        Authintacated = false
-        res.status(400).json({ 
-            message: "Invalid credentials please enter password and email correctly",
-            error: error.message,
-            AUTH: Authintacated
+        console.error("Signup error:", error);
+        res.status(400).json({
+            message: "Failed to signup",
+            AUTH: false
         });
     }
-})
+});
+
+//* login
+app.post("/login", async(req, res) => {
+    try {
+        const {Email, Password} = req.body;
+        
+        // Use lean() for faster query and select only needed fields
+        const user = await User.findOne({ email: Email })
+            .select('Password token')
+            .lean();
+
+        if (!user) {
+            return res.status(401).json({
+                message: "Invalid credentials",
+                AUTH: false
+            });
+        }
+
+        const isValidPassword = await bcrypt.compare(Password, user.Password);
+
+        if (isValidPassword) {
+            res.json({
+                token: user.token,
+                message: "Login successful",
+                AUTH: true
+            });
+        } else {
+            res.status(401).json({
+                message: "Invalid credentials",
+                AUTH: false
+            });
+        }
+
+    } catch(error) {
+        res.status(400).json({
+            message: "Login failed",
+            AUTH: false
+        });
+    }
+});
 
 //* isAuth
 app.get("/isAUTH", async (req, res) => {
