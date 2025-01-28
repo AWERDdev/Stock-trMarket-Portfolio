@@ -34,5 +34,10 @@
         "includeFiles": ["data/**/*"]
       }
     }
-  ]
+  ],
+  "functions": {
+    "api/*.js": {
+      "maxDuration": 30
+    }
+  }
 }
