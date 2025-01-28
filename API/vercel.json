@@ -2,11 +2,11 @@
   "version": 2,
   "routes": [
     {
-      "src": "/api/auth/signup",
+      "src": "/signup",
       "dest": "index.js"
     },
     {
-      "src": "/api/auth/login",
+      "src": "/login",
       "dest": "index.js"
     },
     {
