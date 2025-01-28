@@ -10,39 +10,7 @@ function LoginPage(){
     const [EmailError, setEmailError] = useState('');
     const [PasswordError, setPasswordError] = useState('');
     const [InvalidCredentialsError, setInvalidCredentialsError] = useState('');
-    const fetchOptions = {
-        credentials: 'include',
-        headers: {
-          'Content-Type': 'application/json'
-        }
-      };
-      
-    const fetchWithErrorTracking = async (url, options) => {
-        try {
-            const response = await fetch(url, options);
-            console.log(`Request to ${url}:`, {
-                status: response.status,
-                headers: Object.fromEntries(response.headers),
-                ok: response.ok
-            });
-            
-            if (!response.ok) {
-                const errorData = await response.text();
-                console.error('Response error:', errorData);
-                throw new Error(`HTTP error! status: ${response.status}`);
-            }
-            
-            return response;
-        } catch (error) {
-            console.error('Fetch error:', {
-                message: error.message,
-                url,
-                options
-            });
-            throw error;
-        }
-    };
-    fetchWithErrorTracking()
+    
     const InputHandling = async () => {
         const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
         setEmailError('');
@@ -69,7 +37,7 @@ function LoginPage(){
     }
     const SendData = async ()=>{
         try{
-            const response = await fetch(`${ API_BASE_URL }/login`,fetchOptions,{
+            const response = await fetch(`${ API_BASE_URL }/login`,{
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -103,7 +71,6 @@ function LoginPage(){
     const functionHandling = async () => {
         const isValid = await InputHandling();
         if (isValid) {
-            SendData();
             navigate('/MainApp');
         }
     }
