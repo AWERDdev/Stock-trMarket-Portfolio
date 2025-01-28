@@ -1,0 +1,1 @@
+project finished hosting failed what I am going to do is I am going to try hosting it when I get back where there is internet but for now I will work on making new projects using python and React
