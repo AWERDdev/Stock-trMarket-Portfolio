@@ -60,7 +60,10 @@ app.use((req, res, next) => {
 });
 
 //* database
-mongoose.connect('mongodb://localhost:27017/stockmarket')
+mongoose.connect('mongodb://localhost:27017/stockmarket',{
+    serverSelectionTimeoutMS: 5000,
+    socketTimeoutMS: 5000
+})
 .then(() => console.log('Connected to MongoDB'))
 .catch(err => console.error('MongoDB connection error:', err));
 
