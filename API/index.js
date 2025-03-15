@@ -10,16 +10,9 @@ const bcrypt = require('bcrypt');
 const fs = require('fs');
 const path = require('path');
 //* CORS
-
 app.use(cors({
-    origin: [
-        'https://stockmarket-frontend-ebon.vercel.app',
-        'http://localhost:5173',
-        'https://stockmarket-backend.vercel.app'
-    ],
-    methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
-    credentials: true,
-    allowedHeaders: ['Content-Type', 'Authorization', 'Access-Control-Allow-Origin']
+    origin: 'http://localhost:5174', // Change this to match your frontend
+    credentials: true, // Allow cookies/authentication
 }));
 
 app.use((req, res, next) => {

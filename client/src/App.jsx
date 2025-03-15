@@ -22,7 +22,7 @@ function App() {
         setisAUTH(false);
         window.location.href = '/';
     };
-
+    console.log(API_BASE_URL)
     const HandleNavBar = async () => {
         console.log("Current token:", localStorage.getItem('token'));
         const response = await fetch(`${API_BASE_URL}/isAUTH`, {
