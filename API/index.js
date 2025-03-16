@@ -11,7 +11,7 @@ const fs = require('fs');
 const path = require('path');
 //* CORS
 app.use(cors({
-    origin: 'http://localhost:5174', // Change this to match your frontend
+    origin: ' http://localhost:5173', // Change this to match your frontend
     credentials: true, // Allow cookies/authentication
 }));
 
@@ -19,6 +19,7 @@ app.use((req, res, next) => {
     const allowedOrigins = [
         'https://stockmarket-frontend-ebon.vercel.app',
         'http://localhost:5173',
+        "http://localhost:5174",
         'https://stockmarket-backend.vercel.app'
     ];
     const origin = req.headers.origin;
@@ -185,11 +186,12 @@ app.get("/isAUTH", async (req, res) => {
 
 app.get("/Stock", async (req, res) => {
     try {
-        const stocksPath = path.join(__dirname, 'data', 'Stocks.json');
+        // const stocksPath = path.join(__dirname, 'data', 'Stocks.json');
         console.log('Stock endpoint called');
-        console.log('Current directory:', __dirname);
-        const data = fs.readFileSync(stocksPath, "utf-8");
-        const stocks = JSON.parse(data);
+        // console.log('Current directory:', __dirname);
+        // const data = fs.readFileSync(stocksPath, "utf-8");
+        const response = await fetch(`https://financialmodelingprep.com/api/v3/profile/AAPL,MSFT,GOOGL,AMZN,TSLA,FB,NFLX,NVDA,AMD,INTC,BA,DIS,UBER,LYFT,PYPL,SQ,SHOP,TWTR,ORCL,IBM,SPOT,PLTR,CRM,CSCO,ADBE?apikey=yEctLteSSCQR6nh6VsjKkkXsA7K93dkl`);
+        const stocks = await response.json();
         res.json(stocks);
     } catch (error) {
         console.log('Stock endpoint error:', error);
@@ -202,16 +204,16 @@ app.get("/Stock", async (req, res) => {
     }
 });
 
-app.get('/health', (req, res) => {
-    res.json({
-        status: 'ok',
-        timestamp: new Date().toISOString(),
-        cors: {
-            origin: req.headers.origin,
-            method: req.method
-        }
-    });
-});
+// app.get('/health', (req, res) => {
+//     res.json({
+//         status: 'ok',
+//         timestamp: new Date().toISOString(),
+//         cors: {
+//             origin: req.headers.origin,
+//             method: req.method
+//         }
+//     });
+// });
 
 
 app.listen(port,()=>{

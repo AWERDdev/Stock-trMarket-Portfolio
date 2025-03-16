@@ -22,9 +22,9 @@ function App() {
         setisAUTH(false);
         window.location.href = '/';
     };
-    console.log(API_BASE_URL)
+    // console.log(API_BASE_URL)
     const HandleNavBar = async () => {
-        console.log("Current token:", localStorage.getItem('token'));
+        // console.log("Current token:", localStorage.getItem('token'));
         const response = await fetch(`${API_BASE_URL}/isAUTH`, {
             headers: {
                 'Authorization': `Bearer ${localStorage.getItem('token')}`,
@@ -40,7 +40,9 @@ function App() {
     const ReciveStock = async () => {
         const response = await fetch(`${API_BASE_URL}/Stock`);
         const data = await response.json();
-        console.log('Received data type:', typeof data, Array.isArray(data));
+        
+        //  console.log('Received data type:', typeof data, Array.isArray(data));
+        console.log('Received data type:', data);
         if (!Array.isArray(data)) {
             console.error('Expected array but got:', data);
             return [];
@@ -63,13 +65,13 @@ const handleSearch = (e) => {
     const addToWatchlist = (stock) => {
     if (!watchlist.some(item => item.symbol === stock.symbol)) {
         setWatchlist([...watchlist, stock]);
-        console.log(`Added ${stock.name} to watchlist`);
+        // console.log(`Added ${stock.name} to watchlist`);
     }
     };
     const RemovefromWatchlist = (stock) => {
         const updatedWatchlist = watchlist.filter(item => item.symbol !== stock.symbol);
         setWatchlist(updatedWatchlist);
-        console.log(`Removed ${stock.name} from watchlist`);
+        // console.log(`Removed ${stock.name} from watchlist`);
     };
         
     useEffect(() => {
@@ -78,8 +80,8 @@ const handleSearch = (e) => {
         ReciveStock();
     }, []);
     
-    console.log('Current API_BASE_URL:', API_BASE_URL);
-    console.log('Current route:', window.location.pathname);
+    // console.log('Current API_BASE_URL:', API_BASE_URL);
+    // console.log('Current route:', window.location.pathname);
 
 
     return (
