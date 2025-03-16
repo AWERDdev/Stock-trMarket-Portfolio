@@ -1,13 +1,16 @@
 import PropTypes from 'prop-types';
-
+import { useNavigate } from 'react-router-dom'; // Update this import
 function Stock({ stockData, addToWatchlist }) {
+    const navigate = useNavigate();
     const truncateText = (text, maxLength) => {
         if (!text) return "None";
         return text.length > maxLength ? text.slice(0, maxLength) + "..." : text;
     };
-
+    const handleNav = () =>{
+        navigate(stockData.website)
+    }
     return (
-        <div className="StockItem p-4 hover:bg-[hsl(0,0%,9%)] transition-colors">
+        <div className="StockItem p-4 hover:cursor-pointer hover:bg-[hsl(0,0%,9%)] transition-colors" onClick={handleNav}>
             <div className="flex items-center justify-between max-w-7xl mx-auto">
                 {/* Stock Info Section */}
                 <div className="flex space-x-8 w-1/3 truncate">
